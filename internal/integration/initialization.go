@@ -61,6 +61,7 @@ func Initizalizate(config *config.Config) {
 func InitDao(db *gorm.DB) *AppDao {
 	appDao := new(AppDao)
 	appDao.UserDao = dao.NewUserDao(db)
+	appDao.RoleDao = dao.NewRoleDao(db)
 	return appDao
 }
 
@@ -69,6 +70,9 @@ func InitRepository(dao *AppDao) *AppRepository {
 	appRepository := new(AppRepository)
 	if dao.UserDao != nil {
 		appRepository.UserRepository = repository.NewUserRepository(dao.UserDao)
+	}
+	if dao.RoleDao != nil {
+		appRepository.RoleRepository = repository.NewRoleRepository(dao.RoleDao)
 	}
 	zap.L().Info("repository 初始化完成")
 
@@ -81,6 +85,9 @@ func InitService(repository *AppRepository) *AppService {
 	if repository.UserRepository != nil {
 		appService.UserService = service.NewUserService(repository.UserRepository)
 	}
+	if repository.RoleRepository != nil {
+		appService.RoleService = service.NewRoleService(repository.RoleRepository)
+	}
 	zap.L().Info("service 初始化完成")
 	return appService
 }
@@ -90,6 +97,9 @@ func InitHandler(service *AppService) *AppHandler {
 	appHandler := new(AppHandler)
 	if service.UserService != nil {
 		appHandler.UserHandler = handler.NewUserHandler(service.UserService)
+	}
+	if service.RoleService != nil {
+		appHandler.RoleHandler = handler.NewRoleHandler(service.RoleService)
 	}
 	return appHandler
 }
@@ -109,6 +119,9 @@ func InitRouter(handler *AppHandler, e *casbin.Enforcer) *gin.Engine {
 		apiV1.Use(rbac.CasbinMiddleware(e))
 		if handler.UserHandler != nil {
 			router.RegisterUserRouter(apiV1, handler.UserHandler)
+		}
+		if handler.RoleHandler != nil {
+			router.RegisterRoleRouter(apiV1, handler.RoleHandler)
 		}
 	}
 	return r

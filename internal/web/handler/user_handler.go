@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/kgosLj/opsvoid/internal/model"
 	"github.com/kgosLj/opsvoid/internal/service"
@@ -38,6 +39,32 @@ func (h *UserHandler) Login(c *gin.Context) {
 	utils.RespondSuccess(c, http.StatusOK, response)
 }
 
+// GetUserInfo 获取用户信息
+func (h *UserHandler) GetUserInfo(c *gin.Context) {
+	username, exist := c.Get("username")
+	if !exist {
+		utils.RespondError(c, http.StatusForbidden, "无法获取当前用户权限关联信息")
+		return
+	}
+	user, err := h.svc.GetUserInfo(username.(string))
+	if err != nil {
+		utils.RespondError(c, http.StatusForbidden, fmt.Sprintf("无法获取用户信息：%s", err))
+		return
+	}
+	utils.RespondSuccess(c, http.StatusOK, user)
+}
+
+// CreateUser 创建用户
 func (h *UserHandler) CreateUser(c *gin.Context) {
-	
+	var createUserRequest model.CreateUserRequest
+	if err := c.ShouldBindJSON(&createUserRequest); err != nil {
+		utils.RespondError(c, http.StatusBadRequest, "请求体参数错误："+err.Error())
+		return
+	}
+	resp, err := h.svc.CreateUser(&createUserRequest)
+	if err != nil {
+		utils.RespondError(c, http.StatusBadRequest, "创建用户失败："+err.Error())
+		return
+	}
+	utils.RespondSuccess(c, http.StatusOK, resp)
 }

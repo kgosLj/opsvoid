@@ -10,19 +10,23 @@ import (
 // AppDao 应用程序 DAO
 type AppDao struct {
 	UserDao dao.UserDao
+	RoleDao dao.RoleDao
 }
 
 // AppRepository 应用程序 Repository
 type AppRepository struct {
 	UserRepository repository.UserRepository
+	RoleRepository repository.RoleRepository
 }
 
 // AppService 应用程序 Service
 type AppService struct {
 	UserService service.UserService
+	RoleService service.RoleService
 }
 
 // AppHandler 应用程序 Handler
 type AppHandler struct {
 	UserHandler *handler.UserHandler
+	RoleHandler *handler.RoleHandler
 }

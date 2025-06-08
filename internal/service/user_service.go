@@ -2,6 +2,7 @@ package service
 
 import (
 	"errors"
+	"fmt"
 	"github.com/kgosLj/opsvoid/internal/model"
 	"github.com/kgosLj/opsvoid/internal/repository"
 	"github.com/kgosLj/opsvoid/internal/web/middleware/jwt"
@@ -12,10 +13,15 @@ import (
 var (
 	ErrUserNotFound = errors.New("用户不存在")
 	ErrUserPassword = errors.New("密码错误")
+	ExistUser       = errors.New("用户已存在")
+	ErrHashPassword = errors.New("密码加密失败")
+	NotFoundRole    = errors.New("角色不存在")
 )
 
 type UserService interface {
-	Login(request model.LoginRequest) (model.LoginResponse, error)
+	Login(request model.LoginRequest) (model.LoginResponse, error)               // 登录功能
+	GetUserInfo(username string) (model.GetUserInfo, error)                      // 获得自身的用户信息
+	CreateUser(user *model.CreateUserRequest) (*model.CreateUserResponse, error) // 创建新用户
 }
 
 // userService 实现 UserService 接口
@@ -54,5 +60,63 @@ func (svc *userService) Login(request model.LoginRequest) (model.LoginResponse, 
 	return model.LoginResponse{
 		Username: u.Username,
 		Token:    token,
+	}, nil
+}
+
+// GetUserInfo 获取用户信息
+func (svc *userService) GetUserInfo(username string) (model.GetUserInfo, error) {
+	user, err := svc.repo.FindByUsername(username)
+	if errors.Is(err, ErrUserNotFound) {
+		return model.GetUserInfo{}, ErrUserNotFound
+	} else if err != nil {
+		return model.GetUserInfo{}, err
+	}
+	return model.GetUserInfo{
+		Username: user.Username,
+		Role:     user.Role[0].Name,
+	}, nil
+}
+
+// CreateUser 创建用户
+func (svc *userService) CreateUser(req *model.CreateUserRequest) (*model.CreateUserResponse, error) {
+	// 校验用户名是否存在
+	_, err := svc.repo.FindByUsername(req.Username)
+	if err == nil {
+		return &model.CreateUserResponse{}, ExistUser
+	}
+	if !errors.Is(err, repository.ErrUserNotFound) {
+		return &model.CreateUserResponse{}, fmt.Errorf("查询用户失败: %v", err) // 数据库报错
+	}
+
+	// 哈希密码
+	hashPassword, err := bcrypt.GenerateFromPassword([]byte(req.Password), bcrypt.DefaultCost)
+	if err != nil {
+		return &model.CreateUserResponse{}, ErrHashPassword
+	}
+
+	// 查询角色
+	var roles []*model.Role
+	for _, roleName := range req.Role {
+		role, err := svc.repo.FindRoleByName(roleName)
+		if err != nil {
+			return &model.CreateUserResponse{}, NotFoundRole
+		}
+		roles = append(roles, &role)
+	}
+
+	// 创建用户对象
+	dbUser := &model.User{
+		Username: req.Username,
+		Password: string(hashPassword),
+		Role:     roles,
+	}
+
+	if err := svc.repo.CreateUser(dbUser); err != nil {
+		zap.L().Error("创建用户失败", zap.Error(err), zap.String("username", req.Username))
+		return &model.CreateUserResponse{}, err
+	}
+	return &model.CreateUserResponse{
+		Username: dbUser.Username,
+		Role:     req.Role,
 	}, nil
 }

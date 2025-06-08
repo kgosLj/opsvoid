@@ -20,12 +20,19 @@ func CasbinMiddleware(e *casbin.Enforcer) gin.HandlerFunc {
 			c.Abort()
 			return
 		}
+		// 将 username 转换为字符串类型
+		sub, ok := username.(string)
+		if !ok {
+			utils.RespondError(c, 500, "上下文中存储的用户信息格式不正确")
+			c.Abort()
+			return
+		}
 		// 获取请求的URI
-		obj := c.Request.URL.RequestURI()
+		obj := c.Request.URL.Path
 		// 获取请求的方法
 		act := c.Request.Method
 		// 执行策略匹配
-		ok, err := e.Enforce(username, obj, act)
+		ok, err := e.Enforce(sub, obj, act)
 		if err != nil {
 			utils.RespondError(c, 500, "内部错误")
 			c.Abort()

@@ -24,3 +24,22 @@ type LoginResponse struct {
 	Username string `json:"username"`
 	Token    string `json:"token"`
 }
+
+// GetUserInfo 获取用户信息
+type GetUserInfo struct {
+	Username string `json:"username"`
+	Role     string `json:"role"`
+}
+
+// CreateUserRequest 创建用户请求
+type CreateUserRequest struct {
+	Username string   `json:"username"`
+	Password string   `json:"password"`
+	Role     []string `json:"role"`
+}
+
+// CreateUserResponse 创建用户响应
+type CreateUserResponse struct {
+	Username string   `json:"username"`
+	Role     []string `json:"role"`
+}
