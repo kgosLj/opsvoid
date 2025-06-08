@@ -5,14 +5,23 @@ import (
 	"gorm.io/gorm"
 )
 
+// UserDao 用户 DAO
 type UserDao interface {
-	FindByUsername(request model.LoginRequest) (model.User, error)
+	FindByUsername(username string) (model.User, error)
 }
 
+// GORMUserDAO 基于 GORM 的 UserDao 实现
 type GORMUserDAO struct {
 	db *gorm.DB
 }
 
 func NewUserDao(db *gorm.DB) UserDao {
-	return &GORMUserDAO{db: db}
+	return &GORMUserDAO{
+		db: db,
+	}
+}
+
+// FindByUsername 根据用户名查找用户
+func (dao *GORMUserDAO) FindByUsername(username string) (model.User, error) {
+
 }

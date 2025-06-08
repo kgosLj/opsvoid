@@ -7,8 +7,12 @@ import (
 	"gorm.io/gorm"
 )
 
+var (
+	ErrUserNotFound = errors.New("用户不存在")
+)
+
 type UserRepository interface {
-	FindByUsername(request model.LoginRequest) (model.User, error)
+	FindByUsername(username string) (model.User, error)
 }
 
 type CachedUserRepository struct {
@@ -21,14 +25,13 @@ func NewUserRepository(dao dao.UserDao) UserRepository {
 	}
 }
 
-func (r *CachedUserRepository) FindByUsername(request model.LoginRequest) (model.User, error) {
-	user, err := r.dao.FindByUsername(request)
+func (r *CachedUserRepository) FindByUsername(username string) (model.User, error) {
+	user, err := r.dao.FindByUsername(username)
 	if errors.Is(err, gorm.ErrRecordNotFound) {
-		return model.User{}, errors.New("not found")
+		return model.User{}, ErrUserNotFound
 	}
 	if err != nil {
 		return model.User{}, err
 	}
 	return user, nil
-
 }
