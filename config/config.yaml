@@ -1,0 +1,13 @@
+server:
+  port: 8080
+
+mysql:
+  host:
+  port:
+  username:
+  password:
+  dbname:
+
+redis:
+  address:
+  password:
