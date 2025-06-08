@@ -13,6 +13,6 @@ redis:
   password:
 
 jwt:
-  secret: ""
+  secret: "IPoUf6SMHGtjdacUBGBt3QpnFQt9UsJZZ0RMXfiffX0ww8PDf266rVVNUnUbTnty"
   expire: 86400
   issuer: "opsvoid"

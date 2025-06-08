@@ -10,5 +10,7 @@ func RegisterUserRouter(router *gin.RouterGroup, handler *handler.UserHandler) {
 	ug := router.Group("/user")
 	{
 		ug.POST("/login", handler.Login)
+		ug.POST("/create", handler.CreateUser)
 	}
+
 }

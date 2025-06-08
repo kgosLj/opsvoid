@@ -44,3 +44,70 @@
 {"level":"info","timestamp":"2025-06-08T16:45:05.624+0800","caller":"integration/initialization.go:73","msg":"repository 初始化完成"}
 {"level":"info","timestamp":"2025-06-08T16:45:05.624+0800","caller":"integration/initialization.go:84","msg":"service 初始化完成"}
 {"level":"warn","timestamp":"2025-06-08T16:45:33.532+0800","caller":"logger/zap.go:103","msg":"客户端发生错误","method":"POST","path":"/api/v1/user/login","status":403,"latency":0.7383553,"client_ip":"::1","user_agent":"Apifox/1.0.0 (https://apifox.com)"}
+{"level":"info","timestamp":"2025-06-08T17:06:00.961+0800","caller":"integration/initialization.go:37","msg":"数据库自动迁移成功"}
+{"level":"info","timestamp":"2025-06-08T17:06:02.160+0800","caller":"startup/initadminuser.go:27","msg":"角色初始化或检查完成"}
+{"level":"info","timestamp":"2025-06-08T17:06:03.787+0800","caller":"startup/casbin.go:30","msg":"策略已存在: admin, /api/v1/*, *"}
+{"level":"info","timestamp":"2025-06-08T17:06:03.788+0800","caller":"startup/casbin.go:35","msg":"策略已存在: guest, /api/v1/user/info, GET"}
+{"level":"info","timestamp":"2025-06-08T17:06:03.788+0800","caller":"startup/casbin.go:41","msg":"用户角色关系已存在: admin -> admin"}
+{"level":"info","timestamp":"2025-06-08T17:06:03.788+0800","caller":"startup/casbin.go:46","msg":"用户角色关系已存在: guest -> guest"}
+{"level":"info","timestamp":"2025-06-08T17:06:03.788+0800","caller":"startup/casbin.go:49","msg":"Casbin 初始化并加载策略完成"}
+{"level":"info","timestamp":"2025-06-08T17:06:03.788+0800","caller":"integration/initialization.go:73","msg":"repository 初始化完成"}
+{"level":"info","timestamp":"2025-06-08T17:06:03.788+0800","caller":"integration/initialization.go:84","msg":"service 初始化完成"}
+{"level":"warn","timestamp":"2025-06-08T17:06:12.866+0800","caller":"logger/zap.go:103","msg":"客户端发生错误","method":"POST","path":"/api/v1/user/login","status":403,"latency":0.721846625,"client_ip":"::1","user_agent":"Apifox/1.0.0 (https://apifox.com)"}
+{"level":"info","timestamp":"2025-06-08T17:16:02.689+0800","caller":"integration/initialization.go:37","msg":"数据库自动迁移成功"}
+{"level":"info","timestamp":"2025-06-08T17:16:02.902+0800","caller":"startup/initadminuser.go:27","msg":"角色初始化或检查完成"}
+{"level":"info","timestamp":"2025-06-08T17:16:04.990+0800","caller":"startup/casbin.go:30","msg":"策略已存在: admin, /api/v1/*, *"}
+{"level":"info","timestamp":"2025-06-08T17:16:04.990+0800","caller":"startup/casbin.go:35","msg":"策略已存在: guest, /api/v1/user/info, GET"}
+{"level":"info","timestamp":"2025-06-08T17:16:04.991+0800","caller":"startup/casbin.go:41","msg":"用户角色关系已存在: admin -> admin"}
+{"level":"info","timestamp":"2025-06-08T17:16:04.991+0800","caller":"startup/casbin.go:46","msg":"用户角色关系已存在: guest -> guest"}
+{"level":"info","timestamp":"2025-06-08T17:16:04.991+0800","caller":"startup/casbin.go:49","msg":"Casbin 初始化并加载策略完成"}
+{"level":"info","timestamp":"2025-06-08T17:16:04.991+0800","caller":"integration/initialization.go:73","msg":"repository 初始化完成"}
+{"level":"info","timestamp":"2025-06-08T17:16:04.991+0800","caller":"integration/initialization.go:84","msg":"service 初始化完成"}
+{"level":"error","timestamp":"2025-06-08T17:16:13.488+0800","caller":"service/user_service.go:47","msg":"密码比较失败","error":"crypto/bcrypt: hashedSecret too short to be a bcrypted password","username":"admin","stored_password_hash":"","provided_password":"123456"}
+{"level":"warn","timestamp":"2025-06-08T17:16:13.496+0800","caller":"logger/zap.go:103","msg":"客户端发生错误","method":"POST","path":"/api/v1/user/login","status":403,"latency":0.512092792,"client_ip":"::1","user_agent":"Apifox/1.0.0 (https://apifox.com)"}
+{"level":"info","timestamp":"2025-06-08T17:17:09.607+0800","caller":"integration/initialization.go:37","msg":"数据库自动迁移成功"}
+{"level":"info","timestamp":"2025-06-08T17:17:09.767+0800","caller":"startup/initadminuser.go:27","msg":"角色初始化或检查完成"}
+{"level":"info","timestamp":"2025-06-08T17:17:11.353+0800","caller":"startup/casbin.go:30","msg":"策略已存在: admin, /api/v1/*, *"}
+{"level":"info","timestamp":"2025-06-08T17:17:11.353+0800","caller":"startup/casbin.go:35","msg":"策略已存在: guest, /api/v1/user/info, GET"}
+{"level":"info","timestamp":"2025-06-08T17:17:11.353+0800","caller":"startup/casbin.go:41","msg":"用户角色关系已存在: admin -> admin"}
+{"level":"info","timestamp":"2025-06-08T17:17:11.353+0800","caller":"startup/casbin.go:46","msg":"用户角色关系已存在: guest -> guest"}
+{"level":"info","timestamp":"2025-06-08T17:17:11.353+0800","caller":"startup/casbin.go:49","msg":"Casbin 初始化并加载策略完成"}
+{"level":"info","timestamp":"2025-06-08T17:17:11.353+0800","caller":"integration/initialization.go:73","msg":"repository 初始化完成"}
+{"level":"info","timestamp":"2025-06-08T17:17:11.353+0800","caller":"integration/initialization.go:84","msg":"service 初始化完成"}
+{"level":"error","timestamp":"2025-06-08T17:17:28.497+0800","caller":"service/user_service.go:47","msg":"密码比较失败","error":"crypto/bcrypt: hashedSecret too short to be a bcrypted password","username":"admin","stored_password_hash":"","provided_password":"123456"}
+{"level":"warn","timestamp":"2025-06-08T17:17:28.498+0800","caller":"logger/zap.go:103","msg":"客户端发生错误","method":"POST","path":"/api/v1/user/login","status":403,"latency":0.300671209,"client_ip":"::1","user_agent":"Apifox/1.0.0 (https://apifox.com)"}
+{"level":"info","timestamp":"2025-06-08T17:20:07.685+0800","caller":"integration/initialization.go:37","msg":"数据库自动迁移成功"}
+{"level":"info","timestamp":"2025-06-08T17:20:08.514+0800","caller":"startup/initadminuser.go:27","msg":"角色初始化或检查完成"}
+{"level":"info","timestamp":"2025-06-08T17:20:09.208+0800","caller":"startup/initadminuser.go:51","msg":"初始用户 [admin] 创建成功"}
+{"level":"info","timestamp":"2025-06-08T17:20:10.238+0800","caller":"startup/initadminuser.go:76","msg":"初始用户 [guest] 创建成功"}
+{"level":"info","timestamp":"2025-06-08T17:20:12.177+0800","caller":"startup/casbin.go:49","msg":"Casbin 初始化并加载策略完成"}
+{"level":"info","timestamp":"2025-06-08T17:20:12.177+0800","caller":"integration/initialization.go:73","msg":"repository 初始化完成"}
+{"level":"info","timestamp":"2025-06-08T17:20:12.177+0800","caller":"integration/initialization.go:84","msg":"service 初始化完成"}
+{"level":"error","timestamp":"2025-06-08T17:20:23.034+0800","caller":"service/user_service.go:47","msg":"密码比较失败","error":"crypto/bcrypt: hashedSecret too short to be a bcrypted password","username":"admin","stored_password_hash":"","provided_password":"123456"}
+{"level":"warn","timestamp":"2025-06-08T17:20:23.034+0800","caller":"logger/zap.go:103","msg":"客户端发生错误","method":"POST","path":"/api/v1/user/login","status":403,"latency":0.214828375,"client_ip":"::1","user_agent":"Apifox/1.0.0 (https://apifox.com)"}
+{"level":"info","timestamp":"2025-06-08T17:22:38.060+0800","caller":"integration/initialization.go:37","msg":"数据库自动迁移成功"}
+{"level":"info","timestamp":"2025-06-08T17:22:38.264+0800","caller":"startup/initadminuser.go:27","msg":"角色初始化或检查完成"}
+{"level":"info","timestamp":"2025-06-08T17:22:41.537+0800","caller":"startup/casbin.go:30","msg":"策略已存在: admin, /api/v1/*, *"}
+{"level":"info","timestamp":"2025-06-08T17:22:41.537+0800","caller":"startup/casbin.go:35","msg":"策略已存在: guest, /api/v1/user/info, GET"}
+{"level":"info","timestamp":"2025-06-08T17:22:41.538+0800","caller":"startup/casbin.go:41","msg":"用户角色关系已存在: admin -> admin"}
+{"level":"info","timestamp":"2025-06-08T17:22:41.538+0800","caller":"startup/casbin.go:46","msg":"用户角色关系已存在: guest -> guest"}
+{"level":"info","timestamp":"2025-06-08T17:22:41.538+0800","caller":"startup/casbin.go:49","msg":"Casbin 初始化并加载策略完成"}
+{"level":"info","timestamp":"2025-06-08T17:22:41.538+0800","caller":"integration/initialization.go:73","msg":"repository 初始化完成"}
+{"level":"info","timestamp":"2025-06-08T17:22:41.538+0800","caller":"integration/initialization.go:84","msg":"service 初始化完成"}
+{"level":"info","timestamp":"2025-06-08T17:22:44.241+0800","caller":"logger/zap.go:105","msg":"请求成功","method":"POST","path":"/api/v1/user/login","status":200,"latency":0.528029291,"client_ip":"::1","user_agent":"Apifox/1.0.0 (https://apifox.com)"}
+{"level":"info","timestamp":"2025-06-08T17:26:13.121+0800","caller":"integration/initialization.go:37","msg":"数据库自动迁移成功"}
+{"level":"info","timestamp":"2025-06-08T17:26:13.421+0800","caller":"startup/initadminuser.go:27","msg":"角色初始化或检查完成"}
+{"level":"info","timestamp":"2025-06-08T17:26:15.177+0800","caller":"startup/casbin.go:30","msg":"策略已存在: admin, /api/v1/*, *"}
+{"level":"info","timestamp":"2025-06-08T17:26:15.177+0800","caller":"startup/casbin.go:35","msg":"策略已存在: guest, /api/v1/user/info, GET"}
+{"level":"info","timestamp":"2025-06-08T17:26:15.177+0800","caller":"startup/casbin.go:41","msg":"用户角色关系已存在: admin -> admin"}
+{"level":"info","timestamp":"2025-06-08T17:26:15.177+0800","caller":"startup/casbin.go:46","msg":"用户角色关系已存在: guest -> guest"}
+{"level":"info","timestamp":"2025-06-08T17:26:15.177+0800","caller":"startup/casbin.go:49","msg":"Casbin 初始化并加载策略完成"}
+{"level":"info","timestamp":"2025-06-08T17:26:15.177+0800","caller":"integration/initialization.go:73","msg":"repository 初始化完成"}
+{"level":"info","timestamp":"2025-06-08T17:26:15.177+0800","caller":"integration/initialization.go:84","msg":"service 初始化完成"}
+{"level":"info","timestamp":"2025-06-08T17:26:41.092+0800","caller":"logger/zap.go:105","msg":"请求成功","method":"POST","path":"/api/v1/user/login","status":200,"latency":0.514720209,"client_ip":"::1","user_agent":"Apifox/1.0.0 (https://apifox.com)"}
+{"level":"warn","timestamp":"2025-06-08T17:27:28.157+0800","caller":"logger/zap.go:103","msg":"客户端发生错误","method":"POST","path":"/api/v1/user/create","status":401,"latency":0.000068916,"client_ip":"::1","user_agent":"Apifox/1.0.0 (https://apifox.com)"}
+{"level":"warn","timestamp":"2025-06-08T17:27:39.508+0800","caller":"logger/zap.go:103","msg":"客户端发生错误","method":"POST","path":"/api/v1/user/create","status":401,"latency":0.000157209,"client_ip":"::1","user_agent":"Apifox/1.0.0 (https://apifox.com)"}
+{"level":"info","timestamp":"2025-06-08T17:28:47.259+0800","caller":"logger/zap.go:105","msg":"请求成功","method":"POST","path":"/api/v1/user/login","status":200,"latency":0.907501708,"client_ip":"::1","user_agent":"Apifox/1.0.0 (https://apifox.com)"}
+{"level":"warn","timestamp":"2025-06-08T17:29:00.102+0800","caller":"logger/zap.go:103","msg":"客户端发生错误","method":"POST","path":"/api/v1/user/create","status":401,"latency":0.000132583,"client_ip":"::1","user_agent":"Apifox/1.0.0 (https://apifox.com)"}
+{"level":"warn","timestamp":"2025-06-08T17:58:31.536+0800","caller":"logger/zap.go:103","msg":"客户端发生错误","method":"POST","path":"/api/v1/user/create","status":401,"latency":0.005549041,"client_ip":"::1","user_agent":"Apifox/1.0.0 (https://apifox.com)"}
+{"level":"warn","timestamp":"2025-06-08T17:58:32.994+0800","caller":"logger/zap.go:103","msg":"客户端发生错误","method":"POST","path":"/api/v1/user/create","status":401,"latency":0.000055,"client_ip":"::1","user_agent":"Apifox/1.0.0 (https://apifox.com)"}

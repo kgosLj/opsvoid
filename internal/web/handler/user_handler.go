@@ -37,3 +37,7 @@ func (h *UserHandler) Login(c *gin.Context) {
 
 	utils.RespondSuccess(c, http.StatusOK, response)
 }
+
+func (h *UserHandler) CreateUser(c *gin.Context) {
+	
+}

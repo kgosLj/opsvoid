@@ -23,6 +23,7 @@ func NewUserDao(db *gorm.DB) UserDao {
 
 // FindByUsername 根据用户名查找用户
 func (dao *GORMUserDAO) FindByUsername(username string) (model.User, error) {
-	err := dao.db.Preload("Role").Where("username = ?", username).First(&model.User{}).Error
-	return model.User{}, err
+	var user model.User
+	err := dao.db.Preload("Role").Where("username = ?", username).First(&user).Error
+	return user, err
 }

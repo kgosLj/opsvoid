@@ -5,6 +5,7 @@ import (
 	"github.com/kgosLj/opsvoid/internal/model"
 	"github.com/kgosLj/opsvoid/internal/repository"
 	"github.com/kgosLj/opsvoid/internal/web/middleware/jwt"
+	"go.uber.org/zap"
 	"golang.org/x/crypto/bcrypt"
 )
 
@@ -43,6 +44,7 @@ func (svc *userService) Login(request model.LoginRequest) (model.LoginResponse, 
 
 	// 判断密码是否有正确
 	if err := bcrypt.CompareHashAndPassword([]byte(u.Password), []byte(password)); err != nil {
+		zap.L().Error("密码比较失败", zap.Error(err), zap.String("username", username), zap.String("stored_password_hash", u.Password), zap.String("provided_password", password))
 		return model.LoginResponse{}, ErrUserPassword
 	}
 
