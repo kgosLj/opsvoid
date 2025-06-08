@@ -2,13 +2,17 @@ package integration
 
 import (
 	"fmt"
+	"github.com/casbin/casbin/v2"
 	"github.com/gin-gonic/gin"
 	"github.com/kgosLj/opsvoid/config"
 	"github.com/kgosLj/opsvoid/internal/integration/startup"
+	"github.com/kgosLj/opsvoid/internal/model"
 	"github.com/kgosLj/opsvoid/internal/repository"
 	"github.com/kgosLj/opsvoid/internal/repository/dao"
 	"github.com/kgosLj/opsvoid/internal/service"
 	"github.com/kgosLj/opsvoid/internal/web/handler"
+	"github.com/kgosLj/opsvoid/internal/web/middleware/jwt"
+	"github.com/kgosLj/opsvoid/internal/web/middleware/rbac"
 	"github.com/kgosLj/opsvoid/internal/web/router"
 	"github.com/kgosLj/opsvoid/pkg/logger"
 	"github.com/kgosLj/opsvoid/pkg/utils"
@@ -25,12 +29,24 @@ func Initizalizate(config *config.Config) {
 	dsn := utils.GetDSN(config.Mysql)
 	db := startup.InitMySQL(dsn)
 
+	// gorm 自动表迁移
+	err := db.AutoMigrate(&model.User{}, &model.Role{})
+	if err != nil {
+		zap.L().Fatal("数据库自动迁移失败", zap.Error(err))
+	}
+	zap.L().Info("数据库自动迁移成功")
+
+	// 初始化管理员用户
+	startup.InitAdminUser(db)
+	// 初始化 enforce
+	e := startup.InitEnforce(db)
+
 	// 初始化 gin 服务
 	dao := InitDao(db)
 	repository := InitRepository(dao)
 	service := InitService(repository)
 	handler := InitHandler(service)
-	router := InitRouter(handler)
+	router := InitRouter(handler, e)
 
 	// 启动服务
 	port := config.Server.Port
@@ -79,7 +95,7 @@ func InitHandler(service *AppService) *AppHandler {
 }
 
 // InitRouter 初始化路由
-func InitRouter(handler *AppHandler) *gin.Engine {
+func InitRouter(handler *AppHandler, e *casbin.Enforcer) *gin.Engine {
 	r := gin.Default()
 	// 初始化 zap gin 路由
 	r.Use(logger.GinZapMiddleware(zap.L()))
@@ -88,10 +104,13 @@ func InitRouter(handler *AppHandler) *gin.Engine {
 
 	apiV1 := r.Group("/api/v1")
 	{
+		// 在这里添加路由认证的中间件，记得忽略掉登录功能
+		apiV1.Use(jwt.JWTMiddleware())
+		apiV1.Use(rbac.CasbinMiddleware(e))
 		if handler.UserHandler != nil {
 			router.RegisterUserRouter(apiV1, handler.UserHandler)
 		}
 	}
-
 	return r
+
 }

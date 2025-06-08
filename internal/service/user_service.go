@@ -4,6 +4,7 @@ import (
 	"errors"
 	"github.com/kgosLj/opsvoid/internal/model"
 	"github.com/kgosLj/opsvoid/internal/repository"
+	"github.com/kgosLj/opsvoid/internal/web/middleware/jwt"
 	"golang.org/x/crypto/bcrypt"
 )
 
@@ -16,16 +17,19 @@ type UserService interface {
 	Login(request model.LoginRequest) (model.LoginResponse, error)
 }
 
+// userService 实现 UserService 接口
 type userService struct {
 	repo repository.UserRepository
 }
 
+// NewUserService 构造函数
 func NewUserService(repo repository.UserRepository) UserService {
 	return &userService{
 		repo: repo,
 	}
 }
 
+// Login 登录功能逻辑
 func (svc *userService) Login(request model.LoginRequest) (model.LoginResponse, error) {
 	username := request.Username
 	password := request.Password
@@ -43,9 +47,10 @@ func (svc *userService) Login(request model.LoginRequest) (model.LoginResponse, 
 	}
 
 	// 如果密码正确就生成 token
+	token := jwt.GenerateToken(u)
+
 	return model.LoginResponse{
 		Username: u.Username,
-		Token:
+		Token:    token,
 	}, nil
-
 }

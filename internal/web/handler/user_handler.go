@@ -23,11 +23,16 @@ func (h *UserHandler) Login(c *gin.Context) {
 	var loginRequest model.LoginRequest
 	if err := c.ShouldBindJSON(&loginRequest); err != nil {
 		utils.RespondError(c, http.StatusBadRequest, "请求体参数错误："+err.Error())
+		return
 	}
 
 	response, err := h.svc.Login(loginRequest)
-	if err != nil {
-		utils.RespondError(c, http.StatusInternalServerError, "登录失败："+err.Error())
+	if err == service.ErrUserNotFound {
+		utils.RespondError(c, http.StatusForbidden, "登录失败："+err.Error())
+		return
+	} else if err != nil {
+		utils.RespondError(c, http.StatusForbidden, "登录失败："+err.Error())
+		return
 	}
 
 	utils.RespondSuccess(c, http.StatusOK, response)

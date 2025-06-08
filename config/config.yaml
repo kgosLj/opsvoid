@@ -2,12 +2,17 @@ server:
   port: 8080
 
 mysql:
-  host:
-  port:
-  username:
-  password:
-  dbname:
+  host: 182.43.22.191
+  port: 30336
+  username: root
+  password: Do1Mysql%
+  dbname: opsvoid
 
 redis:
   address:
   password:
+
+jwt:
+  secret: ""
+  expire: 86400
+  issuer: "opsvoid"

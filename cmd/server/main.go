@@ -10,7 +10,7 @@ var configPath string
 
 func main() {
 	// 指定配置文件路径
-	flag.StringVar(&configPath, "config", "./configs/config.yaml", "配置文件路径")
+	flag.StringVar(&configPath, "config", "./config/config.yaml", "配置文件路径")
 	flag.Parse()
 
 	// 读取配置文件

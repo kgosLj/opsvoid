@@ -5,6 +5,7 @@ import (
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"github.com/kgosLj/opsvoid/config"
+	"net/http"
 )
 
 func GetDSN(db config.MysqlConfig) string {
@@ -29,7 +30,7 @@ func Cors() gin.HandlerFunc {
 
 // RespondSuccess 成功响应
 func RespondSuccess(c *gin.Context, code int, data interface{}) {
-	c.JSON(code, gin.H{
+	c.JSON(http.StatusOK, gin.H{
 		"code": code,
 		"data": data,
 		"msg":  "success",
@@ -37,9 +38,9 @@ func RespondSuccess(c *gin.Context, code int, data interface{}) {
 }
 
 // RespondError 错误响应
-func RespondError(c *gin.Context, code int, msg string) {
-	c.JSON(code, gin.H{
-		"code": code,
+func RespondError(c *gin.Context, httpCode int, msg string) {
+	c.JSON(httpCode, gin.H{
+		"code": httpCode,
 		"msg":  msg,
 	})
 }
