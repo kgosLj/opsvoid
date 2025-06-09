@@ -17,6 +17,7 @@ type UserRepository interface {
 	FindByUsername(username string) (model.User, error)
 	CreateUser(user *model.User) error
 	FindRoleByName(name string) (model.Role, error)
+	UpdateUserRoles(user *model.User, roles []*model.Role) error
 }
 
 type CachedUserRepository struct {
@@ -53,4 +54,9 @@ func (r *CachedUserRepository) FindRoleByName(name string) (model.Role, error) {
 		return model.Role{}, ErrRoleNotFound
 	}
 	return role, nil
+}
+
+func (r *CachedUserRepository) UpdateUserRoles(user *model.User, roles []*model.Role) error {
+	err := r.dao.UpdateUserRoles(user, roles)
+	return err
 }

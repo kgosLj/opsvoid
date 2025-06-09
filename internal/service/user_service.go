@@ -22,6 +22,7 @@ type UserService interface {
 	Login(request model.LoginRequest) (model.LoginResponse, error)               // 登录功能
 	GetUserInfo(username string) (model.GetUserInfo, error)                      // 获得自身的用户信息
 	CreateUser(user *model.CreateUserRequest) (*model.CreateUserResponse, error) // 创建新用户
+	BindRole(req *model.BindRoleRequest) (*model.BindRoleResponse, error)        // 用户绑定角色
 }
 
 // userService 实现 UserService 接口
@@ -119,4 +120,44 @@ func (svc *userService) CreateUser(req *model.CreateUserRequest) (*model.CreateU
 		Username: dbUser.Username,
 		Role:     req.Role,
 	}, nil
+}
+
+// BindRole 绑定用户权限
+func (svc *userService) BindRole(req *model.BindRoleRequest) (*model.BindRoleResponse, error) {
+	// 首先先判断是否存在 用户 和 角色
+	// 1. 判断用户是否存在
+	user, err := svc.repo.FindByUsername(req.Username)
+	if err != nil {
+		if errors.Is(err, ErrUserNotFound) {
+			return nil, ErrUserNotFound
+		}
+		return nil, fmt.Errorf("查询用户失败: %v", err)
+	}
+
+	// 2. 检查角色是否存在
+	var roles []*model.Role
+	for _, roleName := range req.Roles {
+		role, err := svc.repo.FindRoleByName(roleName)
+		if err != nil {
+			if errors.Is(err, repository.ErrRoleNotFound) {
+				return nil, NotFoundRole
+			}
+			return nil, fmt.Errorf("查询角色失败: %v", err)
+		}
+		newRole := role
+		roles = append(roles, &newRole)
+	}
+
+	//3. 绑定角色（假设通过 GORM 多对多关系关联更新）
+	if err := svc.repo.UpdateUserRoles(&user, roles); err != nil {
+		zap.L().Error("更新用户角色失败", zap.Error(err), zap.String("username", req.Username))
+		return nil, err
+	}
+
+	// 返回响应
+	return &model.BindRoleResponse{
+		Username: user.Username,
+		Roles:    req.Roles,
+	}, nil
+
 }

@@ -39,7 +39,7 @@ func (h *UserHandler) Login(c *gin.Context) {
 	utils.RespondSuccess(c, http.StatusOK, response)
 }
 
-// GetUserInfo 获取用户信息
+// GetUserInfo 获取用户信息(single)
 func (h *UserHandler) GetUserInfo(c *gin.Context) {
 	username, exist := c.Get("username")
 	if !exist {
@@ -64,6 +64,21 @@ func (h *UserHandler) CreateUser(c *gin.Context) {
 	resp, err := h.svc.CreateUser(&createUserRequest)
 	if err != nil {
 		utils.RespondError(c, http.StatusBadRequest, "创建用户失败："+err.Error())
+		return
+	}
+	utils.RespondSuccess(c, http.StatusOK, resp)
+}
+
+// BindRole 绑定角色
+func (h *UserHandler) BindRole(c *gin.Context) {
+	var bindRoleRequest model.BindRoleRequest
+	if err := c.ShouldBindJSON(&bindRoleRequest); err != nil {
+		utils.RespondError(c, http.StatusBadRequest, "请求体参数错误："+err.Error())
+		return
+	}
+	resp, err := h.svc.BindRole(&bindRoleRequest)
+	if err != nil {
+		utils.RespondError(c, http.StatusBadRequest, "绑定角色失败："+err.Error())
 		return
 	}
 	utils.RespondSuccess(c, http.StatusOK, resp)

@@ -10,6 +10,7 @@ type UserDao interface {
 	FindByUsername(username string) (model.User, error)
 	CreateUser(user *model.User) error
 	FindRoleByName(name string) (model.Role, error)
+	UpdateUserRoles(user *model.User, roles []*model.Role) error
 }
 
 // GORMUserDAO 基于 GORM 的 UserDao 实现
@@ -41,4 +42,8 @@ func (dao *GORMUserDAO) FindRoleByName(name string) (model.Role, error) {
 	var role model.Role
 	err := dao.db.Where("name =?", name).First(&role).Error
 	return role, err
+}
+
+func (dao *GORMUserDAO) UpdateUserRoles(user *model.User, roles []*model.Role) error {
+	return dao.db.Model(user).Association("Role").Replace(roles)
 }

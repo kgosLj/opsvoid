@@ -43,3 +43,13 @@ type CreateUserResponse struct {
 	Username string   `json:"username"`
 	Role     []string `json:"role"`
 }
+
+type BindRoleRequest struct {
+	Username string   `json:"username"`
+	Roles    []string `json:"roles"`
+}
+
+type BindRoleResponse struct {
+	Username string   `json:"username"`
+	Roles    []string `json:"roles"`
+}
