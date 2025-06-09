@@ -26,6 +26,10 @@ func (h *UserHandler) Login(c *gin.Context) {
 		utils.RespondError(c, http.StatusBadRequest, "请求体参数错误："+err.Error())
 		return
 	}
+	if loginRequest.Username == "" || loginRequest.Password == "" {
+		utils.RespondError(c, http.StatusBadRequest, "用户名或密码不能为空")
+		return
+	}
 
 	response, err := h.svc.Login(loginRequest)
 	if err == service.ErrUserNotFound {

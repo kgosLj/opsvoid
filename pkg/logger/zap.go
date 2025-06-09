@@ -8,7 +8,7 @@ import (
 	"time"
 )
 
-func InitZapLogger() {
+func InitZapLogger() *zap.Logger {
 
 	// 定义 zap 编码器
 	encoderConfig := zapcore.EncoderConfig{
@@ -65,9 +65,7 @@ func InitZapLogger() {
 		panic("创建 logger 失败")
 	}
 
-	// 关键步骤：用我们新创建的 logger 替换 zap 的全局 logger
-	zap.ReplaceGlobals(logger)
-	
+	return logger
 }
 
 func GinZapMiddleware(logger *zap.Logger) gin.HandlerFunc {

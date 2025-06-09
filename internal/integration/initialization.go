@@ -23,7 +23,9 @@ import (
 // Initizalizate 初始化全局函数
 func Initizalizate(config *config.Config) {
 	// 初始化日志
-	logger.InitZapLogger()
+	log := logger.InitZapLogger()
+	// 设置全局的日志输出
+	zap.ReplaceGlobals(log)
 
 	// 初始化数据库
 	dsn := utils.GetDSN(config.Mysql)

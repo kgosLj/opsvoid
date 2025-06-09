@@ -7,8 +7,11 @@ import (
 	"gorm.io/gorm"
 )
 
+var E *casbin.Enforcer
+
 // Casbin 初始化 Casbin
 func InitEnforce(db *gorm.DB) *casbin.Enforcer {
+	E = &casbin.Enforcer{}
 	adapter, err := gormadapter.NewAdapterByDB(db)
 	if err != nil {
 		zap.L().Fatal("初始化 Casbin 适配器失败", zap.Error(err))
@@ -47,5 +50,6 @@ func InitEnforce(db *gorm.DB) *casbin.Enforcer {
 	}
 
 	zap.L().Info("Casbin 初始化并加载策略完成")
+	E = e
 	return e
 }

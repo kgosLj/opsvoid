@@ -3,6 +3,7 @@ package service
 import (
 	"errors"
 	"fmt"
+	"github.com/kgosLj/opsvoid/internal/integration/startup"
 	"github.com/kgosLj/opsvoid/internal/model"
 	"github.com/kgosLj/opsvoid/internal/repository"
 	"github.com/kgosLj/opsvoid/internal/web/middleware/jwt"
@@ -11,11 +12,12 @@ import (
 )
 
 var (
-	ErrUserNotFound = errors.New("用户不存在")
-	ErrUserPassword = errors.New("密码错误")
-	ExistUser       = errors.New("用户已存在")
-	ErrHashPassword = errors.New("密码加密失败")
-	NotFoundRole    = errors.New("角色不存在")
+	ErrUserNotFound  = errors.New("用户不存在")
+	ErrUserPassword  = errors.New("密码错误")
+	ExistUser        = errors.New("用户已存在")
+	ErrHashPassword  = errors.New("密码加密失败")
+	NotFoundRole     = errors.New("角色不存在")
+	NotFoundPassword = errors.New("密码不能为空")
 )
 
 type UserService interface {
@@ -89,6 +91,9 @@ func (svc *userService) CreateUser(req *model.CreateUserRequest) (*model.CreateU
 		return &model.CreateUserResponse{}, fmt.Errorf("查询用户失败: %v", err) // 数据库报错
 	}
 
+	if req.Password == "" {
+		return &model.CreateUserResponse{}, NotFoundPassword
+	}
 	// 哈希密码
 	hashPassword, err := bcrypt.GenerateFromPassword([]byte(req.Password), bcrypt.DefaultCost)
 	if err != nil {
@@ -116,13 +121,24 @@ func (svc *userService) CreateUser(req *model.CreateUserRequest) (*model.CreateU
 		zap.L().Error("创建用户失败", zap.Error(err), zap.String("username", req.Username))
 		return &model.CreateUserResponse{}, err
 	}
+
+	// fix: 同步更新 casbin 的用户-角色关系策略 (g)
+	for _, roleName := range req.Role {
+		_, err = startup.E.AddGroupingPolicy(req.Username, roleName)
+		if err != nil {
+			zap.L().Error("casbin 添加用户-角色策略失败", zap.Error(err), zap.String("username", req.Username), zap.String("role", roleName))
+			return nil, err
+		}
+		zap.L().Info("casbin 添加用户-角色策略成功", zap.String("username", req.Username), zap.String("role", roleName))
+	}
+
 	return &model.CreateUserResponse{
 		Username: dbUser.Username,
 		Role:     req.Role,
 	}, nil
 }
 
-// BindRole 绑定用户权限
+// BindRole 绑定用户权限 (同时需要注意的是，要同时使用 enforce 来绑定上用户名和 casbin 的关系)
 func (svc *userService) BindRole(req *model.BindRoleRequest) (*model.BindRoleResponse, error) {
 	// 首先先判断是否存在 用户 和 角色
 	// 1. 判断用户是否存在
@@ -152,6 +168,15 @@ func (svc *userService) BindRole(req *model.BindRoleRequest) (*model.BindRoleRes
 	if err := svc.repo.UpdateUserRoles(&user, roles); err != nil {
 		zap.L().Error("更新用户角色失败", zap.Error(err), zap.String("username", req.Username))
 		return nil, err
+	}
+
+	// fix: 同步更新 casbin 的用户-角色关系策略 (g)
+	for _, roleName := range req.Roles {
+		_, err = startup.E.AddGroupingPolicy(user.Username, roleName)
+		if err != nil {
+			zap.L().Error("casbin 添加用户-角色策略失败", zap.Error(err), zap.String("username", user.Username), zap.String("role", roleName))
+			return nil, fmt.Errorf("casbin 添加用户-角色策略失败: %v", err)
+		}
 	}
 
 	// 返回响应
