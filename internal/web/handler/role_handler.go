@@ -16,6 +16,9 @@ func NewRoleHandler(svc service.RoleService) *RoleHandler {
 	return &RoleHandler{svc: svc}
 }
 
+// CreateRole 创建角色
+// 创建时候可以为角色添加权限
+// 创建完成之后就通过 CreateRbac 去添加角色的权限
 func (h *RoleHandler) CreateRole(c *gin.Context) {
 	var req model.RoleCreateRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
@@ -27,4 +30,8 @@ func (h *RoleHandler) CreateRole(c *gin.Context) {
 		return
 	}
 	utils.RespondSuccess(c, http.StatusOK, "创建角色成功！")
+}
+
+func (h *RoleHandler) CreateRbac(c *gin.Context) {
+	
 }

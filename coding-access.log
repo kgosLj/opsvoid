@@ -7,3 +7,59 @@
 {"level":"info","timestamp":"2025-06-09T17:36:46.476+0800","caller":"startup/casbin.go:52","msg":"Casbin 初始化并加载策略完成"}
 {"level":"info","timestamp":"2025-06-09T17:36:46.476+0800","caller":"integration/initialization.go:79","msg":"repository 初始化完成"}
 {"level":"info","timestamp":"2025-06-09T17:36:46.476+0800","caller":"integration/initialization.go:93","msg":"service 初始化完成"}
+{"level":"info","timestamp":"2025-06-09T17:57:17.605+0800","caller":"integration/initialization.go:39","msg":"数据库自动迁移成功"}
+{"level":"info","timestamp":"2025-06-09T17:57:17.803+0800","caller":"startup/initadminuser.go:27","msg":"角色初始化或检查完成"}
+{"level":"info","timestamp":"2025-06-09T17:57:19.079+0800","caller":"startup/casbin.go:33","msg":"策略已存在: admin, /api/v1/*, *"}
+{"level":"info","timestamp":"2025-06-09T17:57:19.079+0800","caller":"startup/casbin.go:38","msg":"策略已存在: guest, /api/v1/user/info, GET"}
+{"level":"info","timestamp":"2025-06-09T17:57:19.079+0800","caller":"startup/casbin.go:44","msg":"用户角色关系已存在: admin -> admin"}
+{"level":"info","timestamp":"2025-06-09T17:57:19.079+0800","caller":"startup/casbin.go:49","msg":"用户角色关系已存在: guest -> guest"}
+{"level":"info","timestamp":"2025-06-09T17:57:19.079+0800","caller":"startup/casbin.go:52","msg":"Casbin 初始化并加载策略完成"}
+{"level":"info","timestamp":"2025-06-09T17:57:19.079+0800","caller":"integration/initialization.go:79","msg":"repository 初始化完成"}
+{"level":"info","timestamp":"2025-06-09T17:57:19.079+0800","caller":"integration/initialization.go:93","msg":"service 初始化完成"}
+{"level":"error","timestamp":"2025-06-09T17:59:19.775+0800","caller":"service/role_serivce.go:31","msg":"角色已存在","role":"ops"}
+{"level":"warn","timestamp":"2025-06-09T17:59:19.776+0800","caller":"logger/zap.go:101","msg":"客户端发生错误","method":"POST","path":"/api/v1/role/create","status":400,"latency":0.086183958,"client_ip":"::1","user_agent":"Apifox/1.0.0 (https://apifox.com)"}
+{"level":"info","timestamp":"2025-06-09T18:02:04.834+0800","caller":"integration/initialization.go:39","msg":"数据库自动迁移成功"}
+{"level":"info","timestamp":"2025-06-09T18:02:05.399+0800","caller":"startup/initadminuser.go:27","msg":"角色初始化或检查完成"}
+{"level":"info","timestamp":"2025-06-09T18:02:28.164+0800","caller":"startup/casbin.go:33","msg":"策略已存在: admin, /api/v1/*, *"}
+{"level":"info","timestamp":"2025-06-09T18:02:28.164+0800","caller":"startup/casbin.go:38","msg":"策略已存在: guest, /api/v1/user/info, GET"}
+{"level":"info","timestamp":"2025-06-09T18:02:28.164+0800","caller":"startup/casbin.go:44","msg":"用户角色关系已存在: admin -> admin"}
+{"level":"info","timestamp":"2025-06-09T18:02:28.164+0800","caller":"startup/casbin.go:49","msg":"用户角色关系已存在: guest -> guest"}
+{"level":"info","timestamp":"2025-06-09T18:02:28.164+0800","caller":"startup/casbin.go:52","msg":"Casbin 初始化并加载策略完成"}
+{"level":"info","timestamp":"2025-06-09T18:02:28.164+0800","caller":"integration/initialization.go:79","msg":"repository 初始化完成"}
+{"level":"info","timestamp":"2025-06-09T18:02:28.164+0800","caller":"integration/initialization.go:93","msg":"service 初始化完成"}
+{"level":"warn","timestamp":"2025-06-09T18:03:56.522+0800","caller":"logger/zap.go:101","msg":"客户端发生错误","method":"POST","path":"/api/v1/role/create","status":404,"latency":0.000295625,"client_ip":"::1","user_agent":"Apifox/1.0.0 (https://apifox.com)"}
+{"level":"info","timestamp":"2025-06-09T18:04:55.324+0800","caller":"service/role_serivce.go:34","msg":"创建角色","role":"dev"}
+{"level":"info","timestamp":"2025-06-09T18:05:29.109+0800","caller":"service/role_serivce.go:40","msg":"创建角色成功","role":"dev"}
+{"level":"info","timestamp":"2025-06-09T18:05:52.882+0800","caller":"service/role_serivce.go:53","msg":"创建角色权限成功","role":"dev"}
+{"level":"info","timestamp":"2025-06-09T18:05:52.883+0800","caller":"logger/zap.go:103","msg":"请求成功","method":"POST","path":"/api/v1/role/createrole","status":200,"latency":109.974306375,"client_ip":"::1","user_agent":"Apifox/1.0.0 (https://apifox.com)"}
+{"level":"error","timestamp":"2025-06-09T18:05:57.169+0800","caller":"service/role_serivce.go:31","msg":"角色已存在","role":"dev"}
+{"level":"warn","timestamp":"2025-06-09T18:05:57.169+0800","caller":"logger/zap.go:101","msg":"客户端发生错误","method":"POST","path":"/api/v1/role/createrole","status":400,"latency":16.274212625,"client_ip":"::1","user_agent":"Apifox/1.0.0 (https://apifox.com)"}
+{"level":"error","timestamp":"2025-06-09T18:13:29.809+0800","caller":"startup/mysql.go:13","msg":"连接 Mysql 数据库失败：%s","error":"dial tcp 182.43.22.191:30336: connect: operation timed out"}
+{"level":"info","timestamp":"2025-06-09T19:19:16.200+0800","caller":"integration/initialization.go:39","msg":"数据库自动迁移成功"}
+{"level":"info","timestamp":"2025-06-09T19:19:16.450+0800","caller":"startup/initadminuser.go:27","msg":"角色初始化或检查完成"}
+{"level":"info","timestamp":"2025-06-09T19:19:17.542+0800","caller":"startup/casbin.go:33","msg":"策略已存在: admin, /api/v1/*, *"}
+{"level":"info","timestamp":"2025-06-09T19:19:17.542+0800","caller":"startup/casbin.go:38","msg":"策略已存在: guest, /api/v1/user/info, GET"}
+{"level":"info","timestamp":"2025-06-09T19:19:17.542+0800","caller":"startup/casbin.go:44","msg":"用户角色关系已存在: admin -> admin"}
+{"level":"info","timestamp":"2025-06-09T19:19:17.542+0800","caller":"startup/casbin.go:49","msg":"用户角色关系已存在: guest -> guest"}
+{"level":"info","timestamp":"2025-06-09T19:19:17.542+0800","caller":"startup/casbin.go:52","msg":"Casbin 初始化并加载策略完成"}
+{"level":"info","timestamp":"2025-06-09T19:19:17.542+0800","caller":"integration/initialization.go:79","msg":"repository 初始化完成"}
+{"level":"info","timestamp":"2025-06-09T19:19:17.542+0800","caller":"integration/initialization.go:93","msg":"service 初始化完成"}
+{"level":"warn","timestamp":"2025-06-09T19:19:37.848+0800","caller":"logger/zap.go:101","msg":"客户端发生错误","method":"POST","path":"/api/v1/user/create","status":400,"latency":0.275098375,"client_ip":"::1","user_agent":"Apifox/1.0.0 (https://apifox.com)"}
+{"level":"info","timestamp":"2025-06-09T19:19:55.639+0800","caller":"service/role_serivce.go:34","msg":"创建角色","role":"dev"}
+{"level":"info","timestamp":"2025-06-09T19:19:55.826+0800","caller":"service/role_serivce.go:40","msg":"创建角色成功","role":"dev"}
+{"level":"info","timestamp":"2025-06-09T19:19:55.826+0800","caller":"service/role_serivce.go:46","msg":"角色权限已存在","role":"dev"}
+{"level":"info","timestamp":"2025-06-09T19:19:55.826+0800","caller":"logger/zap.go:103","msg":"请求成功","method":"POST","path":"/api/v1/role/createrole","status":200,"latency":0.267704292,"client_ip":"::1","user_agent":"Apifox/1.0.0 (https://apifox.com)"}
+{"level":"info","timestamp":"2025-06-09T19:21:56.377+0800","caller":"logger/zap.go:103","msg":"请求成功","method":"POST","path":"/api/v1/user/bindrole","status":200,"latency":1.470407792,"client_ip":"::1","user_agent":"Apifox/1.0.0 (https://apifox.com)"}
+{"level":"info","timestamp":"2025-06-09T19:30:32.024+0800","caller":"logger/zap.go:103","msg":"请求成功","method":"GET","path":"/api/v1/user/info","status":200,"latency":0.255268708,"client_ip":"::1","user_agent":"Apifox/1.0.0 (https://apifox.com)"}
+{"level":"info","timestamp":"2025-06-09T19:30:40.783+0800","caller":"logger/zap.go:103","msg":"请求成功","method":"POST","path":"/api/v1/user/login","status":200,"latency":0.501472583,"client_ip":"::1","user_agent":"Apifox/1.0.0 (https://apifox.com)"}
+{"level":"info","timestamp":"2025-06-09T19:30:53.162+0800","caller":"logger/zap.go:103","msg":"请求成功","method":"GET","path":"/api/v1/user/info","status":200,"latency":0.324837875,"client_ip":"::1","user_agent":"Apifox/1.0.0 (https://apifox.com)"}
+{"level":"info","timestamp":"2025-06-09T19:33:42.038+0800","caller":"integration/initialization.go:39","msg":"数据库自动迁移成功"}
+{"level":"info","timestamp":"2025-06-09T19:33:42.193+0800","caller":"startup/initadminuser.go:27","msg":"角色初始化或检查完成"}
+{"level":"info","timestamp":"2025-06-09T19:33:43.611+0800","caller":"startup/casbin.go:33","msg":"策略已存在: admin, /api/v1/*, *"}
+{"level":"info","timestamp":"2025-06-09T19:33:43.612+0800","caller":"startup/casbin.go:38","msg":"策略已存在: guest, /api/v1/user/info, GET"}
+{"level":"info","timestamp":"2025-06-09T19:33:43.612+0800","caller":"startup/casbin.go:44","msg":"用户角色关系已存在: admin -> admin"}
+{"level":"info","timestamp":"2025-06-09T19:33:43.612+0800","caller":"startup/casbin.go:49","msg":"用户角色关系已存在: guest -> guest"}
+{"level":"info","timestamp":"2025-06-09T19:33:43.612+0800","caller":"startup/casbin.go:52","msg":"Casbin 初始化并加载策略完成"}
+{"level":"info","timestamp":"2025-06-09T19:33:43.612+0800","caller":"integration/initialization.go:79","msg":"repository 初始化完成"}
+{"level":"info","timestamp":"2025-06-09T19:33:43.612+0800","caller":"integration/initialization.go:93","msg":"service 初始化完成"}
+{"level":"info","timestamp":"2025-06-09T19:33:50.731+0800","caller":"logger/zap.go:103","msg":"请求成功","method":"GET","path":"/api/v1/user/info","status":200,"latency":0.373453959,"client_ip":"::1","user_agent":"Apifox/1.0.0 (https://apifox.com)"}

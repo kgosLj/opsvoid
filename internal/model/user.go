@@ -27,8 +27,8 @@ type LoginResponse struct {
 
 // GetUserInfo 获取用户信息
 type GetUserInfo struct {
-	Username string `json:"username"`
-	Role     string `json:"role"`
+	Username string   `json:"username"`
+	Role     []string `json:"role"`
 }
 
 // CreateUserRequest 创建用户请求

@@ -74,9 +74,13 @@ func (svc *userService) GetUserInfo(username string) (model.GetUserInfo, error) 
 	} else if err != nil {
 		return model.GetUserInfo{}, err
 	}
+	var roleList []string
+	for _, role := range user.Role {
+		roleList = append(roleList, role.Name)
+	}
 	return model.GetUserInfo{
 		Username: user.Username,
-		Role:     user.Role[0].Name,
+		Role:     roleList,
 	}, nil
 }
 

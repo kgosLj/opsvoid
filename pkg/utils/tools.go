@@ -5,9 +5,12 @@ import (
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"github.com/kgosLj/opsvoid/config"
+	"github.com/kgosLj/opsvoid/internal/integration/startup"
+	"go.uber.org/zap"
 	"net/http"
 )
 
+// GetDSN 获取数据库连接字符串
 func GetDSN(db config.MysqlConfig) string {
 	return fmt.Sprintf("%s:%s@tcp(%s:%d)/%s?charset=utf8mb4&parseTime=True&loc=Local",
 		db.Username,
@@ -17,6 +20,7 @@ func GetDSN(db config.MysqlConfig) string {
 		db.DBName)
 }
 
+// Cors 跨域中间件
 func Cors() gin.HandlerFunc {
 	return cors.New(cors.Config{
 		AllowOrigins:     []string{"*"}, // 允许所有域名跨域访问
@@ -43,4 +47,17 @@ func RespondError(c *gin.Context, httpCode int, msg string) {
 		"code": httpCode,
 		"msg":  msg,
 	})
+}
+
+// IsRbacPolicyExists 判断 rbac 策略是否存在
+func IsRbacPolicyExists(sub, obj, act string) bool {
+	exist, err := startup.E.HasPolicy(sub, obj, act)
+	if err != nil {
+		zap.L().Info("获取 rbac 权限时候出错", zap.Error(err))
+		return false
+	}
+	if exist {
+		return true
+	}
+	return false
 }
